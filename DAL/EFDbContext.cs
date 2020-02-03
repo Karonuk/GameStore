@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace DAL
 {
-    public class EFDbContext
+    public class EFDbContext:DbContext
     {
     }
 }
