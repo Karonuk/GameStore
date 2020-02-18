@@ -20,5 +20,6 @@ namespace DAL
         public DbSet<UserProfile> Users { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<GameLibrary> GameLibraries { get; set; }
+        public DbSet<Genre> Genres { get; set; }
     }
 }

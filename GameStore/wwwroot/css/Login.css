@@ -1,0 +1,19 @@
+﻿.reg {
+    display: flex;
+    justify-content: center;
+}
+.containerFlex{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-content:center;
+    padding:0.5rem;
+    width:45rem;
+    border:1px solid gray;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
