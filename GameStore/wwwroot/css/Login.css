@@ -2,12 +2,12 @@
     display: flex;
     justify-content: center;
 }
-.containerFlex{
-    position:relative;
+.container-flex{
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-content:center;
+    margin:0.5rem;
     padding:0.5rem;
     width:45rem;
     border:1px solid gray;
