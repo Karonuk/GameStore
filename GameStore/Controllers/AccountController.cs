@@ -22,34 +22,44 @@ namespace GameStore.Controllers
         public AccountController(SignInManager<DbUser> signInManager,EFDbContext context)
         {
             _signInManager = signInManager;
+            _context = context;
         }
         public IActionResult Index()
         {
             return View();
         }
-
+        [HttpGet]
         public IActionResult Login()
         {
-            return View();
+            return View(new LoginViewModel { MsgEmail="",MsgPassword=""});
         }
 
-        public Task Login(LoginViewModel user)
+        
+        public async Task<IActionResult> Login(LoginViewModel user)
         {
-            var User = _context.Users.FirstOrDefault(x=>x.User.Email==user.Email);
+            var User =await _context.Users.Include(x=>x.User).FirstOrDefaultAsync(x=>x.User.Email==user.Email);
             if (User != null)
             {
                 var result = _signInManager.PasswordSignInAsync(User.User, user.Password, false, false).Result;
                 if (result.Succeeded)
                 {
-                    Authenticate(User.User.Email);                    
+                    await Authenticate(User.User.Email);
+                    return RedirectToAction("Index", "Home");                    
+                }
+                else
+                {
+                    return View(new LoginViewModel { MsgPassword="Invalid password"});
                 }
             }
-            return RedirectToAction("Login","Home");
+            else
+            {
+                return View(new LoginViewModel { MsgEmail="Invalid email" });
+            }
         }
 
+
         private async Task Authenticate(string userName)
-        {
-            
+        {            
             // создаем один claim
             var claims = new List<Claim>
             {

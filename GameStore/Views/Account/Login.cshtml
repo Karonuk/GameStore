@@ -1,19 +1,19 @@
 ﻿@model GameStore.Models.LoginViewModel
 
-
 <div class="container-flex">
     <h2>Login</h2>
     <form asp-action="Login" asp-controller="Account" asp-anti-forgery="true">
-        <div asp-validation-summary="ModelOnly"></div>
+        
         <div class="form-group">
             <label asp-for="Email">Email address</label>
             <input type="text" class="form-control" asp-for="Email">
-            <span asp-validation-for="Email" />
+            <span class="text-danger">@Model.MsgEmail</span>
             <small class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1" asp-for="Password">Password</label>
             <input type="password" class="form-control" id="exampleInputPassword1" asp-for="Password">
+            <span class="text-danger">@Model.MsgPassword</span>
         </div>
         <div class="form-group reg">
             <button type="submit" class="btn btn-outline-secondary">Login</button>
