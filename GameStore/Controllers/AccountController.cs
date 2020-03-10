@@ -19,7 +19,7 @@ namespace GameStore.Controllers
     {
         private readonly SignInManager<DbUser> _signInManager;
         private EFDbContext _context;
-        public AccountController(SignInManager<DbUser> signInManager,EFDbContext context)
+        public AccountController(SignInManager<DbUser> signInManager, EFDbContext context)
         {
             _signInManager = signInManager;
             _context = context;
@@ -31,35 +31,45 @@ namespace GameStore.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            return View(new LoginViewModel { MsgEmail="",MsgPassword=""});
+            return View(new LoginViewModel { MsgEmail = "", MsgPassword = "" });
         }
 
-        
+
         public async Task<IActionResult> Login(LoginViewModel user)
         {
-            var User =await _context.Users.Include(x=>x.User).FirstOrDefaultAsync(x=>x.User.Email==user.Email);
+            var User = await _context.Users.Include(x => x.User).FirstOrDefaultAsync(x => x.User.Email == user.Email);
             if (User != null)
             {
                 var result = _signInManager.PasswordSignInAsync(User.User, user.Password, false, false).Result;
                 if (result.Succeeded)
                 {
                     await Authenticate(User.User.Email);
-                    return RedirectToAction("Index", "Home");                    
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    return View(new LoginViewModel { MsgPassword="Invalid password"});
+                    return View(new LoginViewModel
+                    {
+                        Email = user.Email,
+                        Password = user.Password,
+                        MsgPassword = "Invalid password"
+                    });
                 }
             }
             else
             {
-                return View(new LoginViewModel { MsgEmail="Invalid email" });
+                return View(new LoginViewModel
+                {
+                    Email = user.Email,
+                    Password = user.Password,
+                    MsgEmail = "Invalid email"
+                });
             }
         }
 
 
         private async Task Authenticate(string userName)
-        {            
+        {
             // создаем один claim
             var claims = new List<Claim>
             {
@@ -69,7 +79,7 @@ namespace GameStore.Controllers
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             // установка аутентификационных куки
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
-        }
+        }       
 
         public IActionResult AccessDenied()
         {
