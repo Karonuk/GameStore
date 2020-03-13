@@ -1,0 +1,14 @@
+﻿@model GameStore.Models.RegisterViewModel
+
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <form method="post" asp-controller="Account" asp-action="Register">
+                <div asp-validation-summary="ModelOnly"></div>
+                <input asp-for="Name" type="text" class="fadeIn second" placeholder="Username">
+                <input asp-for="Email" type="email" class="fadeIn second" placeholder="Email">
+                <input asp-for="Password" type="password" class="fadeIn third" placeholder="Password">
+                <input asp-for="PasswordConfirm" type="password" class="fadeIn third" placeholder="RepeatPassword">
+                <input type="submit" class="fadeIn fourth" value="Register">
+            </form>
+        </div>
+    </div>

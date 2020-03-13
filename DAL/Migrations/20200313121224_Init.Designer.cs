@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(EFDbContext))]
-    [Migration("20200220181116_init")]
-    partial class init
+    [Migration("20200313121224_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -105,18 +105,10 @@ namespace DAL.Migrations
                 {
                     b.Property<string>("Id");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(75);
-
                     b.Property<string>("Image")
                         .HasMaxLength(150);
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(75);
-
-                    b.Property<string>("MiddleName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(75);
 

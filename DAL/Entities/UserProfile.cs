@@ -12,11 +12,7 @@ namespace DAL.Entities
         [Key, ForeignKey("User")]
         public string Id { get; set; }
         [Required, StringLength(75)]
-        public string FirstName { get; set; }
-        [Required, StringLength(75)]
-        public string MiddleName { get; set; }
-        [Required, StringLength(75)]
-        public string LastName { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// Фото користувача
         /// </summary>

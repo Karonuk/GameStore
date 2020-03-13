@@ -30,10 +30,9 @@ namespace DAL.Seeder
                 var userprofile = new UserProfile
                 {
                     Id = user.Id,
-                    FirstName = "Olexiy",
-                    LastName = "Pyshnyak",
-                    MiddleName = "Petrovich",
-                    RegistrationDate = DateTime.Now
+                    Name = "Karonuk",
+                    RegistrationDate = DateTime.Now,
+                    User=user                    
                 };
                 _context.Users.Add(userprofile);               
                 _context.SaveChanges();

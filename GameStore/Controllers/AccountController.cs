@@ -19,15 +19,62 @@ namespace GameStore.Controllers
     {
         private readonly SignInManager<DbUser> _signInManager;
         private EFDbContext _context;
-        public AccountController(SignInManager<DbUser> signInManager, EFDbContext context)
+        public readonly UserManager<DbUser> _userManager;
+        public AccountController(SignInManager<DbUser> signInManager, EFDbContext context, UserManager<DbUser> userManager)
         {
             _signInManager = signInManager;
             _context = context;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                UserProfile userProfile = new UserProfile
+                {
+                    Name = model.Name,
+                    RegistrationDate = DateTime.Now
+                };
+
+                DbUser user = new DbUser
+                {
+                    Email = model.Email,
+                    UserName = model.Email,
+                    UserProfile = userProfile
+                };
+
+                var rolename = "User";
+                var result = await _userManager.CreateAsync(user, model.Password);
+                result = _userManager.AddToRoleAsync(user, rolename).Result;
+                
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, false);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+            }
+
+            return View(model);
+        }
+
         [HttpGet]
         public IActionResult Login()
         {

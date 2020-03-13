@@ -103,18 +103,10 @@ namespace DAL.Migrations
                 {
                     b.Property<string>("Id");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(75);
-
                     b.Property<string>("Image")
                         .HasMaxLength(150);
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(75);
-
-                    b.Property<string>("MiddleName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(75);
 

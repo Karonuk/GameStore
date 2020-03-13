@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL.Migrations
 {
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -184,9 +184,7 @@ namespace DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    FirstName = table.Column<string>(maxLength: 75, nullable: false),
-                    MiddleName = table.Column<string>(maxLength: 75, nullable: false),
-                    LastName = table.Column<string>(maxLength: 75, nullable: false),
+                    Name = table.Column<string>(maxLength: 75, nullable: false),
                     Image = table.Column<string>(maxLength: 150, nullable: true),
                     RegistrationDate = table.Column<DateTime>(nullable: false)
                 },
