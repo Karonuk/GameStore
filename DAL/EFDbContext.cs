@@ -17,9 +17,9 @@ namespace DAL
 
         public DbSet<Country> Countries { get; set; }
         public DbSet<DeveloperCompany> Developers { get; set; }
-        public DbSet<UserProfile> Users { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<GameLibrary> GameLibraries { get; set; }
         public DbSet<Genre> Genres { get; set; }
+        public DbSet<UserProfile> Users { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL;
+using DAL.Entities;
 using DAL.IdentityModel;
 using DAL.Seeder;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -39,18 +40,20 @@ namespace GameStore
             services.AddDbContext<EFDbContext>(
                  options =>
             options.UseSqlServer(Configuration.GetConnectionString("MainConnection")));
+
             services.AddIdentity<DbUser, DbRole>(options => options.Stores.MaxLengthForKeys = 128)
                 .AddEntityFrameworkStores<EFDbContext>()
-                .AddDefaultTokenProviders();            
+                .AddDefaultTokenProviders();
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
                     options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
                     options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
                 });
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
+        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
