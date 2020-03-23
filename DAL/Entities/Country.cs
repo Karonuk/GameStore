@@ -10,5 +10,7 @@ namespace DAL.Entities
         [Key]
         public string Id { get; set; }
         public string Name { get; set; }
+
+        public ICollection<DeveloperCompany> developers { get; set; }
     }
 }

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -57,6 +57,18 @@ namespace DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Countries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Genres",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Genres", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -250,6 +262,7 @@ namespace DAL.Migrations
                     Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Price = table.Column<double>(nullable: false),
+                    GenresId = table.Column<string>(nullable: true),
                     GameLibraryId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -261,23 +274,10 @@ namespace DAL.Migrations
                         principalTable: "GameLibraries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Genres",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    GameId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Genres", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Genres_Games_GameId",
-                        column: x => x.GameId,
-                        principalTable: "Games",
+                        name: "FK_Games_Genres_GenresId",
+                        column: x => x.GenresId,
+                        principalTable: "Genres",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -352,9 +352,9 @@ namespace DAL.Migrations
                 column: "GameLibraryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Genres_GameId",
-                table: "Genres",
-                column: "GameId");
+                name: "IX_Games_GenresId",
+                table: "Games",
+                column: "GenresId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -378,7 +378,7 @@ namespace DAL.Migrations
                 name: "Developers");
 
             migrationBuilder.DropTable(
-                name: "Genres");
+                name: "Games");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -387,10 +387,10 @@ namespace DAL.Migrations
                 name: "Countries");
 
             migrationBuilder.DropTable(
-                name: "Games");
+                name: "GameLibraries");
 
             migrationBuilder.DropTable(
-                name: "GameLibraries");
+                name: "Genres");
 
             migrationBuilder.DropTable(
                 name: "Users");

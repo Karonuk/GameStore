@@ -50,7 +50,7 @@ namespace GameStore.Controllers
                 DbUser user = new DbUser
                 {
                     Email = model.Email,
-                    UserName = model.Email,
+                    UserName = model.Name,
                     UserProfile = userProfile
                 };
 

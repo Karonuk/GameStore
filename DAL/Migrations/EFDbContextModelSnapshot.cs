@@ -58,6 +58,8 @@ namespace DAL.Migrations
 
                     b.Property<string>("GameLibraryId");
 
+                    b.Property<string>("GenresId");
+
                     b.Property<string>("Name");
 
                     b.Property<double>("Price");
@@ -65,6 +67,8 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("GameLibraryId");
+
+                    b.HasIndex("GenresId");
 
                     b.ToTable("Games");
                 });
@@ -88,13 +92,9 @@ namespace DAL.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("GameId");
-
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GameId");
 
                     b.ToTable("Genres");
                 });
@@ -293,7 +293,7 @@ namespace DAL.Migrations
             modelBuilder.Entity("DAL.Entities.DeveloperCompany", b =>
                 {
                     b.HasOne("DAL.Entities.Country", "Country")
-                        .WithMany()
+                        .WithMany("developers")
                         .HasForeignKey("CountryId");
 
                     b.HasOne("DAL.Entities.UserProfile", "User")
@@ -306,6 +306,10 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Entities.GameLibrary")
                         .WithMany("Games")
                         .HasForeignKey("GameLibraryId");
+
+                    b.HasOne("DAL.Entities.Genre", "Genres")
+                        .WithMany("Games")
+                        .HasForeignKey("GenresId");
                 });
 
             modelBuilder.Entity("DAL.Entities.GameLibrary", b =>
@@ -313,13 +317,6 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Entities.UserProfile", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("DAL.Entities.Genre", b =>
-                {
-                    b.HasOne("DAL.Entities.Game")
-                        .WithMany("Genres")
-                        .HasForeignKey("GameId");
                 });
 
             modelBuilder.Entity("DAL.Entities.UserProfile", b =>
